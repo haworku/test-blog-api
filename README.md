@@ -4,7 +4,7 @@ Learn about building apis again.
 
 ## anticipated work
 
-- [ ] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
+- [x] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
 - [ ] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [ ] Write initial documentation of proposed api.
 - [ ] Write simple api integration tests with Jest/supertest (TDD).
