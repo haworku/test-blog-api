@@ -4,7 +4,8 @@ Learn about building apis again.
 
 ## setup
 
-- Add DB_PASS to `.env` file. Currently only allows whitelisted IP addresses.
+- Add DB_PASS to `.env` file.
+- Add IP address to IP Whitelist in Mongo Cloud Atlas.
 
 ## scripts
 
@@ -15,9 +16,9 @@ Learn about building apis again.
 - [x] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
 - [x] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [x] Add initial data models (users, posts, comments, categories)
-- [ ] Write initial documentation of proposed api.
+- [ ] Write initial documentation of proposed api. **[hw]**
 - [ ] Complete Node api work. Write simple api integration tests with Jest/supertest (TDD) first. Make separate PRs for each resource.
-  - [ ] Users
+  - [ ] Users **[hw]**
   - [ ] Posts
   - [ ] Comments
   - [ ] Categories

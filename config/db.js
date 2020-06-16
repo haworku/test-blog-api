@@ -17,7 +17,7 @@ mongoose.connect(dbURI, options).then(
   }
 );
 
-// Models
+// Models - each creates a Collection
 require("../models/Users");
 require("../models/Comments");
 require("../models/Posts");
