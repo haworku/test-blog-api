@@ -12,6 +12,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// use node api
+app.use(router);
+
 // listen for connections
 const port = process.env.PORT || 3301;
 app.listen(port, () => {
