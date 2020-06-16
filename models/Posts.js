@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Comments = require("./Comments");
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
@@ -27,8 +28,8 @@ const PostSchema = new Schema({
     lowercase: true,
     trim: true,
   },
-  // comments: [Comment],
-  author: { type: Schema.ObjectId },
+  comments: { type: [Comments.Schema] },
+  author: { type: Schema.ObjectId, ref: "Users" },
 });
 
 PostSchema.methods.findAuthor = function (callback) {

@@ -7,8 +7,14 @@ const CommentSchema = new Schema({
   },
   date: { type: Date },
   body: { type: String },
-  author: { type: Schema.ObjectId },
-  // comments: [Comment],
+  author: {
+    type: Schema.ObjectId,
+    ref: "Users",
+    required: false,
+    default: "anonymous",
+  },
+  replies: [this],
 });
 
-module.exports = mongoose.model("Comments", CommentSchema);
+exports.Schema = CommentSchema;
+exports.Model = mongoose.model("Comments", CommentSchema);
