@@ -16,3 +16,9 @@ mongoose.connect(dbURI, options).then(
     console.log("Error connecting Database instance due to: ", err);
   }
 );
+
+// Models
+require("../models/Users");
+require("../models/Comments");
+require("../models/Posts");
+require("../models/Categories");
