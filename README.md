@@ -16,8 +16,7 @@ Learn about building apis again.
 - [x] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
 - [x] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [x] Add initial data models (users, posts, comments, categories)
-- [ ] Write initial documentation of proposed api. **[hw]**
-- [ ] Complete Node api work. Write simple api integration tests with Jest/supertest (TDD) first. Make separate PRs for each resource.
+- [ ] Complete Node api work. Write documentation, simple api integration tests with Jest/supertest (TDD) first. Make separate PRs for each resource.
   - [ ] Users **[hw]**
   - [ ] Posts
   - [ ] Comments

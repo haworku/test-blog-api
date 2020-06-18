@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   username: {
     type: String,
-    unique: true,
     required: true,
+    index: true,
     trim: true,
     lowercase: true,
     match: [/^[a-zA-Z0-9]+$/, "is invalid"],
@@ -23,6 +22,8 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.plugin(uniqueValidator, { message: "is already taken." });
+UserSchema.methods.findPosts = function (callback) {
+  return this.db.model("Post").findById(this._id, callback);
+};
 
 module.exports = mongoose.model("Users", UserSchema);
