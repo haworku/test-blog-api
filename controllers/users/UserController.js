@@ -1,4 +1,4 @@
-const User = require("../models/Users");
+const User = require("../../models/Users");
 
 exports.listAllUsers = (req, res) => {
   User.find({}, (err, user) => {
@@ -9,15 +9,19 @@ exports.listAllUsers = (req, res) => {
   });
 };
 
-exports.createNewUser = (req, res) => {
-  let newUser = new User(req.body);
-  newUser.save((err, user) => {
+exports.createNewUser = async (req, res) => {
+  console.log(req.body);
+  const newUser = req.body;
+  const user = new User(newUser);
+  try {
+    await user.save();
+    res.json(user);
+  } catch (err) {
     if (err) {
       res.status(500).send(err);
-      // TO DO: Add specific error message when creating a user with duplicate username
+      // TODO: Add specific error message when creating a user with duplicate username
     }
-    res.status(201).json(user);
-  });
+  }
 };
 
 exports.updateUser = (req, res) => {
@@ -35,7 +39,7 @@ exports.updateUser = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-  User.remove({ _id: req.params.userid }, (err, user) => {
+  User.deleteOne({ _id: req.params.userid }, (err, user) => {
     if (err) {
       res.status(404).send(err);
     }

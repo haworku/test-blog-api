@@ -6,6 +6,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     index: true,
+    unique: true,
     trim: true,
     lowercase: true,
     match: [/^[a-zA-Z0-9]+$/, "is invalid"],
@@ -16,6 +17,7 @@ const UserSchema = new Schema({
       if (value < 0) throw new Error("Age must be greater than 0.");
     },
   },
+  // TODO: add lastModified, handled in controller
   createdOn: {
     type: Date,
     default: Date.now,
