@@ -1,7 +1,7 @@
 const supertest = require("supertest");
-const app = require("../../server");
-const mongooseInstance = require("../../config/db");
-const User = require("../../models/Users");
+const app = require("../server");
+const mongooseInstance = require("../config/db");
+const User = require("../models/Users");
 
 const request = supertest(app);
 
@@ -95,7 +95,8 @@ describe("Users", () => {
 
     //delete user
     const response = await request.delete(`/users/${userInDb._id}`);
-    console.log(response);
+
+    // check db
     const deletedUser = await User.findOne({ _id: userInDb._id });
     expect(deletedUser).toBeFalsy();
 
