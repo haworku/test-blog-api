@@ -10,12 +10,11 @@ exports.listAllUsers = (req, res) => {
 };
 
 exports.createNewUser = async (req, res) => {
-  console.log(req.body);
   const newUser = req.body;
   const user = new User(newUser);
   try {
     await user.save();
-    res.json(user);
+    res.status(201).json(user);
   } catch (err) {
     if (err) {
       res.status(500).send(err);
@@ -43,11 +42,11 @@ exports.deleteUser = (req, res) => {
     if (err) {
       res.status(404).send(err);
     }
-    res.status(200).json({ message: "User successfully deleted" });
+    res.status(204).json({ message: "User successfully deleted" });
   });
 };
 
-exports.getUser = (req, body) => {
+exports.getUser = (req, res) => {
   User.findById(req.params.userid, (err, user) => {
     if (err) {
       res.status(500).send(err);
