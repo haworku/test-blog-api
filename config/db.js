@@ -6,6 +6,8 @@ const dbURI = `mongodb+srv://admin:${process.env.DB_PASS}@cluster0-yr8wf.mongodb
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 };
 
 mongoose.connect(dbURI, options).then(
@@ -22,3 +24,5 @@ require("../models/Users");
 require("../models/Comments");
 require("../models/Posts");
 require("../models/Categories");
+
+module.exports = mongoose;

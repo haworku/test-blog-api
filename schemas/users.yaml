@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Blog API
+  description: A test blog api
+
+# USERS
+paths:
+  /users:
+    get:
+      summary: List all users
+      responses:
+        "200":
+          description: An array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+        "400":
+          $ref: "#/components/schemas/Error"
+        default:
+          $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a new user
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Sucessfully created new user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/schemas/Error"
+
+  /users/{_id}:
+    get:
+      summary: List single user by id
+      tags:
+        - users
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success, returns single user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+        "400":
+          $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/schemas/404Error"
+        default:
+          $ref: "#/components/schemas/Error"
+
+    patch:
+      summary: Update a single user by id
+      tags:
+        - users
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+        "400":
+          $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/schemas/404Error"
+        default:
+          $ref: "#/components/schemas/Error"
+
+    delete:
+      summary: Delete a single user by id
+      tags:
+        - users
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Successfully deleted
+
+        "400":
+          $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/schemas/404Error"
+        default:
+          $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+      properties:
+        username:
+          type: string
+        age:
+          type: integer
+        createdOn:
+          type: string
+          format: date-time
+        _id:
+          "type": "string"
+
+    Error:
+      description: Invalid Request
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    404Error:
+      description: Not Found
+      type: object
+      properties:
+        message:
+          type: string
