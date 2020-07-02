@@ -8,52 +8,42 @@ info:
 paths:
   /users:
     get:
-      description: List all users
+      summary: List all users
       responses:
         "200":
           description: An array of users
           content:
-          application/json:
-            type: array
-            items:
-              $ref: "#/components/schemas/User"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
 
         "400":
-          description: Invalid request
           $ref: "#/components/schemas/Error"
         default:
-          description: Something has gone wrong
           $ref: "#/components/schemas/Error"
     post:
-      summary: Create a new username
+      summary: Create a new user
       tags:
         - users
-      parameters:
-        - name: username
-          in: path
-          required: true
-          schema:
-          type: string
       requestBody:
         required: true
         content:
           application/json:
-            $ref: "#/components/schemas/User"
+            schema:
+              $ref: "#/components/schemas/User"
       responses:
         "200":
           description: Sucessfully created new user
           content:
-          application/json:
-            $ref: "#/components/schemas/User"
-
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
         "400":
-          description: Invalid request
-          $ref: "#/components/schemas/Error"
-        default:
-          description: Something has gone wrong
           $ref: "#/components/schemas/Error"
 
-  /users/{userId}:
+  /users/{_id}:
     get:
       summary: List single user by id
       tags:
@@ -66,76 +56,70 @@ paths:
             type: string
       responses:
         "200":
-          summary: A single user
+          description: Success, returns single user
           content:
-          application/json:
-            $ref: "#/components/schemas/User"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
 
         "400":
-          summary: Invalid request
           $ref: "#/components/schemas/Error"
         "404":
-        summary: Invalid request
-        $ref: "#/components/schemas/404Error"
+          $ref: "#/components/schemas/404Error"
         default:
-          summary: Something has gone wrong
           $ref: "#/components/schemas/Error"
 
-  patch:
-    summary: Update a single user by id
-    tags:
-      - users
-    parameters:
-      - name: username
-        in: path
+    patch:
+      summary: Update a single user by id
+      tags:
+        - users
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
         required: true
-        schema:
-          type: string
-    requestBody:
-      required: true
-      content:
-        application/json:
-          $ref: "#/components/schemas/User"
-    responses:
-      "201":
-        summary: Updated user
         content:
-        application/json:
-          $ref: "#/components/schemas/User"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
 
-      "400":
-        summary: Invalid request
-        $ref: "#/components/schemas/Error"
-      "404":
-        summary: Invalid request
-        $ref: "#/components/schemas/404Error"
-      default:
-        summary: Something has gone wrong
-        $ref: "#/components/schemas/Error"
+        "400":
+          $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/schemas/404Error"
+        default:
+          $ref: "#/components/schemas/Error"
 
-  delete:
-    summary: Delete a single user by id
-    tags:
-      - users
-    parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          type: string
-    responses:
-      "204":
-        summary: Successfully deleted
+    delete:
+      summary: Delete a single user by id
+      tags:
+        - users
+      parameters:
+        - name: _id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Successfully deleted
 
-      "400":
-        summary: Invalid request
-        $ref: "#/components/schemas/Error"
-      "404":
-        summary: Invalid request
-        $ref: "#/components/schemas/404Error"
-      default:
-        summary: Something has gone wrong
-        $ref: "#/components/schemas/Error"
+        "400":
+          $ref: "#/components/schemas/Error"
+        "404":
+          $ref: "#/components/schemas/404Error"
+        default:
+          $ref: "#/components/schemas/Error"
 
 components:
   schemas:
@@ -146,11 +130,11 @@ components:
       properties:
         username:
           type: string
-          required: true,
         age:
           type: integer
         createdOn:
-          type: date-time
+          type: string
+          format: date-time
         _id:
           "type": "string"
 
@@ -159,23 +143,17 @@ components:
       required:
         - code
         - message
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
 
     404Error:
       description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
+      type: object
+      properties:
+        message:
+          type: string
