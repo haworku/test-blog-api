@@ -10,7 +10,8 @@ Learn about building apis again.
 ## scripts
 
 - `npm install` install dependencies
-- `npm run start` to run app
+- `npm run start` run api server with validator (based on OpenApi 3.0 spec)
+- `npm run start-no-validate` run server without validations
 
 ## anticipated work
 
@@ -19,7 +20,7 @@ Learn about building apis again.
 - [x] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
 - [x] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [x] Add initial data models (users, posts, comments, categories)
-  - [ ] Users 
+  - [ ] Users
   - [ ] Posts
   - [ ] Comments
   - [ ] Categories

@@ -6,6 +6,7 @@ const User = require("../models/Users");
 const request = supertest(app);
 
 beforeAll(async () => {
+  // TODO: use a different db for each db model test suite
   await mongooseInstance;
 });
 
