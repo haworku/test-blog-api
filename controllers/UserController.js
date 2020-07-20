@@ -28,10 +28,9 @@ exports.updateUser = async (req, res) => {
         new: true,
         runValidators: true,
         context: "query",
-        upsert: true,
       }
     );
-
+    if (!newUser) return res.status(404).send({ message: "No user found" });
     res.status(200).json(newUser);
   } catch (err) {
     res.status(500).send(err);
@@ -40,8 +39,8 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.deleteOne({ _id: req.params.userid });
-    if (!user) res.status(404).send({ message: "No user found" });
+    const user = await User.findOneAndDelete({ _id: req.params.userid });
+    if (!user) return res.status(404).send({ message: "No user found" });
     res.status(204).json({ message: "User successfully deleted" });
   } catch (err) {
     res.status(500).send(err);
@@ -51,6 +50,7 @@ exports.deleteUser = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.userid);
+    if (!user) return res.status(404).send({ message: "No user found" });
     res.status(200).json(user);
   } catch (err) {
     res.status(500).send(err);

@@ -21,7 +21,7 @@ afterAll(async () => {
 
 describe("/users", () => {
   describe("methods", () => {
-    it("GET returns empty list", async (done) => {
+    it("GET returns empty list on success", async (done) => {
       const response = await request.get("/users");
 
       expect(response.status).toBe(200);
@@ -43,7 +43,7 @@ describe("/users", () => {
       done();
     });
 
-    it("POST returns new user", async (done) => {
+    it("POST returns new user with 201 on success", async (done) => {
       const userData = { username: "test1", age: 12 };
       // create user
       const response = await addUserAsync(userData);
@@ -122,7 +122,7 @@ describe("/users", () => {
 
 describe("/users/:id", () => {
   describe("methods", () => {
-    it("GET returns existing user", async (done) => {
+    it("GET returns existing user on success", async (done) => {
       const userData = { username: "test1", age: 12 };
       // create user
       const newUserResponse = await addUserAsync(userData);
@@ -146,7 +146,7 @@ describe("/users/:id", () => {
       done();
     });
 
-    it("PUT returns edited user", async (done) => {
+    it("PUT returns edited user on success", async (done) => {
       const userData = { username: "test1", age: 12 };
       const editedUserData = { ...userData, age: 77 };
       const response = await addUserAndEditAsync(userData, editedUserData);
@@ -156,7 +156,7 @@ describe("/users/:id", () => {
       done();
     });
 
-    it("DELETE deletes user from database", async (done) => {
+    it("DELETE deletes user from database and returns 204", async (done) => {
       const userData = { username: "test1", age: 12 };
       // create user
       await addUserAsync(userData);
@@ -176,7 +176,21 @@ describe("/users/:id", () => {
       done();
     });
 
-    it("for each method - 404 not found for resource that does not exist");
+    it.each([
+      ["GET", () => request.get("/users/5f15c2dbf9fe694626a42edf")],
+      [
+        "PUT",
+        () => request.put("/users/5f15c2dbf9fe694626a42edf").send({ age: 88 }),
+      ],
+      ["DELETE", () => request.delete("/users/5f15c2dbf9fe694626a42edf")],
+    ])(
+      "%s returns 404 when :userid does not exist",
+      async (method, request, done) => {
+        const response = await request();
+        expect(response.status).toBe(404);
+        done();
+      }
+    );
   });
 
   describe("validations", () => {
