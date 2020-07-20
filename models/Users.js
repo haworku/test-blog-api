@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var uniqueValidator = require("mongoose-unique-validator");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -28,4 +29,5 @@ UserSchema.methods.findPosts = function (callback) {
   return this.db.model("Post").findById(this._id, callback);
 };
 
+UserSchema.plugin(uniqueValidator);
 module.exports = mongoose.model("Users", UserSchema);

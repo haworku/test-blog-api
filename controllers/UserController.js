@@ -15,8 +15,7 @@ exports.createNewUser = async (req, res) => {
     await user.save();
     res.status(201).json(user);
   } catch (err) {
-    const error = checkForDuplicateKeyError(err);
-    res.status(500).send(error);
+    res.status(500).send(err);
   }
 };
 
@@ -27,12 +26,15 @@ exports.updateUser = async (req, res) => {
       req.body,
       {
         new: true,
+        runValidators: true,
+        context: "query",
+        upsert: true,
       }
     );
+
     res.status(200).json(newUser);
   } catch (err) {
-    const error = checkForDuplicateKeyError(err);
-    res.status(500).send(error);
+    res.status(500).send(err);
   }
 };
 
@@ -54,17 +56,3 @@ exports.getUser = async (req, res) => {
     res.status(500).send(err);
   }
 };
-
-const checkForDuplicateKeyError = (err) =>
-  err.code === 11000 && err.keyPattern.hasOwnProperty("username")
-    ? {
-        errors: {
-          username: {
-            kind: "unique",
-            message: `Path 'username' (${err.keyValue.username}) is not unique.`,
-          },
-        },
-        message: `Users validation failed: username: Path 'username' (${err.keyValue.username}) is not unique.`,
-        name: "DuplicateKeyError",
-      }
-    : err;
