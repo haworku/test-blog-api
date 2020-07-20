@@ -20,10 +20,10 @@ Learn about building apis again.
 - [x] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
 - [x] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [x] Add initial data models (users, posts, comments, categories)
-  - [ ] Users
-  - [ ] Posts
-  - [ ] Comments
-  - [ ] Categories
+  - [x] Users api
+  - [] Posts api (WIP)
+  - [ ] Comments api (WIP)
+  - [ ] Categories api
 
 ### REST API
 
