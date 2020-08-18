@@ -21,9 +21,9 @@ Learn about building apis again.
 - [x] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [x] Add initial data models (users, posts, comments, categories)
   - [x] Users api
-  - [] Posts api (WIP)
-  - [ ] Comments api (WIP)
-  - [ ] Categories api
+  - [x] Posts api 
+  - [x] Comments api 
+  - [x] Categories api
 
 ### REST API
 
