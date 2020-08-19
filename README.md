@@ -20,15 +20,10 @@ Learn about building apis again.
 - [x] Set up Node server using [`expressjs`](https://github.com/expressjs/expressjs.com)
 - [x] Set up database using [`mongoose`]() and [MongoAtlas](https://www.mongodb.com/cloud/atlas).
 - [x] Add initial data models (users, posts, comments, categories)
-  - [x] Users api
-  - [] Posts api (WIP)
-  - [ ] Comments api (WIP)
-  - [ ] Categories api
 
 ### REST API
 
 Make separate PRs for each resource. For each data model:
-
 1. Write initial OpenApi 3.0 docs
 2. Write simple api integration tests with Jest/supertest (TDD).
 3. Complete Node api work.
