@@ -4,17 +4,20 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
   title: {
     type: String,
+    required: true,
   },
-  date: { type: Date },
+  createdOn: {
+    type: Date,
+    default: Date.now,
+  },
   body: { type: String },
   author: {
     type: Schema.ObjectId,
     ref: "Users",
-    required: false,
-    default: "anonymous",
+    required: true,
+    // TODO - add default: "Anonymous",
   },
   replies: [this],
 });
 
-exports.Schema = CommentSchema;
-exports.Model = mongoose.model("Comments", CommentSchema);
+module.exports = mongoose.model("Comments", CommentSchema);

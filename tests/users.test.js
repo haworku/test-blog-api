@@ -8,6 +8,7 @@ const request = supertest(app);
 beforeAll(async () => {
   // TODO: use a different db for each db model test suite
   await mongooseInstance;
+  await User.collection.drop();
 });
 
 afterEach(async () => {
@@ -191,6 +192,44 @@ describe("/users/:id", () => {
         done();
       }
     );
+
+    it("GET /comments returns empty array when valid user has no comments", async (done) => {
+      // create user
+      const userResponse = await addUserAsync({ username: "test1", age: 7 });
+
+      // request user comments
+      const response = await request.get(
+        `/users/${userResponse.body._id}/comments`
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([]);
+      done();
+    });
+
+    it("GET /comments return user comments when they exist", async (done) => {
+      // create user
+      const userResponse = await addUserAsync({ username: "test1", age: 7 });
+
+      // create comment authored by user
+      const commentData = { title: "A comment", author: userResponse.body._id };
+      const commentResponse = await request
+        .post("/comments")
+        .send({ commentData });
+
+      // request user comments
+      const response = await request.get(
+        `/users/${userResponse.body._id}/comments`
+      );
+
+      expect(response.status).toBe(200);
+      console.log(response.body);
+      expect(response.body.length).toEqual(1);
+      // expect(response.body.length).toEqual(
+      //   expect.arrayContaining(expect.objectContaining(commentData))
+      // );
+      done();
+    });
   });
 
   describe("validations", () => {

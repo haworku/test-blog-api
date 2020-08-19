@@ -1,4 +1,5 @@
 const User = require("../models/Users");
+const Comment = require("../models/Comments");
 
 exports.listAllUsers = async (req, res) => {
   try {
@@ -52,6 +53,22 @@ exports.getUser = async (req, res) => {
     const user = await User.findById(req.params.userid);
     if (!user) return res.status(404).send({ message: "No user found" });
     res.status(200).json(user);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+exports.getUserComments = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userid);
+    if (!user) return res.status(404).send({ message: "No user found" });
+
+    try {
+      const comments = await Comment.find({ author: req.params.userid });
+      res.status(200).json(comments);
+    } catch {
+      res.status(500).send(err);
+    }
   } catch (err) {
     res.status(500).send(err);
   }

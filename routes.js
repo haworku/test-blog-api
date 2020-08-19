@@ -1,8 +1,10 @@
 const express = require("express");
+
+const CommentController = require("./controllers/CommentController");
 const UserController = require("./controllers/UserController");
 const app = express();
 
-// Users
+// USERS
 app
   .route("/users")
   .get(UserController.listAllUsers)
@@ -14,6 +16,18 @@ app
   .put(UserController.updateUser)
   .delete(UserController.deleteUser);
 
-//   TODO: app.route("/users/:userid/posts")
+app.route("/users/:userid/comments").get(UserController.getUserComments);
+
+// COMMENTS
+app
+  .route("/comments")
+  .get(CommentController.listAllComments)
+  .post(CommentController.createNewComment);
+
+app
+  .route("/comments/:commentid")
+  .get(CommentController.getComment)
+  .put(CommentController.updateComment)
+  .delete(CommentController.deleteComment);
 
 module.exports = app;
